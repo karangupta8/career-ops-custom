@@ -1,0 +1,9 @@
+{
+  "id": "naukri",
+  "apiVersion": 1,
+  "description": "Naukri.com — India's #1 job portal. Zero-token JSON API provider using their public search endpoint.",
+  "hooks": ["provider"],
+  "requiredEnv": [],
+  "allowedHosts": ["www.naukri.com"],
+  "humanInTheLoop": true
+}

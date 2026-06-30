@@ -1,0 +1,41 @@
+# career-ops — Plugin activation (opt-in)
+#
+# This file is yours: gitignored and never auto-updated by upstream.
+# Copied and extended from config/plugins.example.yml.
+#
+# Two gates must both be satisfied for a plugin to load:
+#   1. enabled: true below
+#   2. Any requiredEnv vars present in .env (run `node doctor.mjs` to check)
+#
+# Plugins in plugins.local/ (user-private, gitignored) are listed here too.
+# Bundled plugins (plugins/) are listed first; local plugins follow.
+
+plugins:
+  # ── Bundled plugins ───────────────────────────────────────────────────────
+
+  # apify (provider) — keyed job source via an Apify actor.
+  # Needs APIFY_TOKEN in .env.
+  apify:
+    enabled: false
+
+  # notion (export + search) — mirror tracker to Notion DB.
+  # Needs NOTION_ACCESS_TOKEN + NOTION_PARENT_PAGE_ID in .env.
+  notion:
+    enabled: false
+
+  # gmail (ingest) — pull job leads from a Gmail label into pipeline.
+  # Needs GMAIL_CLIENT_ID + GMAIL_CLIENT_SECRET + GMAIL_REFRESH_TOKEN in .env.
+  gmail:
+    enabled: false
+    # label: "Job Leads"
+    # days_back: 7
+
+  # ── User-private plugins (plugins.local/) ─────────────────────────────────
+  # These live in plugins.local/ which is gitignored — they will never be
+  # overwritten by `node update-system.mjs`. Safe to customize freely.
+
+  # naukri (provider) — India's #1 job portal. Zero-token public API.
+  # No API key required. Uses the same JSON API as the Naukri website.
+  # Activate portals.yml entries with `provider: naukri` to use.
+  naukri:
+    enabled: true
