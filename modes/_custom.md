@@ -78,6 +78,28 @@ Location: {candidate.location}
 - Never include passwords, SSN, passport numbers, or any credential in this prompt.
 - The apply mode's per-question format maps directly: each `### N. [Question]` + `> [Answer]` becomes one entry in the Form Answers block.
 
+### reactive-resume (RR export)
+
+**Trigger:** User says "reactive resume", "RR export", "build resume in reactive resume", "export to reactive resume", or asks for a resume rendered from a chosen template.
+
+**What it is:** The `custom-integrations/` layer wires career-ops → Reactive Resume (vendored as a git submodule at `custom-integrations/vendor/reactive-resume`). career-ops produces JD-tailored CV content; an adapter serializes it to a canonical **JSON Resume** file that RR imports natively; the user picks an RR template and exports the PDF. Full docs: `custom-integrations/README.md`.
+
+**Steps:**
+1. Produce the CV markdown to convert:
+   - **Base CV:** use `cv.md` directly.
+   - **JD-tailored:** first run the normal `pdf`/tailoring flow to generate tailored content, write it to a markdown file mirroring `cv.md`'s section structure (e.g. `output/cv-{candidate}-{company}.tailored.md`), then convert that.
+2. Convert to canonical JSON Resume:
+   ```bash
+   node custom-integrations/cv-to-resume/cv-to-jsonresume.mjs --cv <cv-or-tailored.md> --job "<title @ company>" --pretty
+   ```
+   Output: `custom-integrations/output/resume.canonical.json`.
+3. Tell the user to import it in Reactive Resume: Dashboard → Create Resume → **Import → JSON Resume** → upload the file → pick a template → Export → PDF. (Self-host RR with `docker compose -f custom-integrations/vendor/reactive-resume/compose.yml up -d`.)
+
+**Rules:**
+- NEVER hand-edit anything under `custom-integrations/vendor/` — it is a submodule. All glue stays in `custom-integrations/` (outside `vendor/`).
+- The adapter reads only in-scope source-of-truth files (`cv.md`, `config/profile.yml`) — no fabrication; same content rules as CV generation.
+- To update the vendored RR: `bash custom-integrations/scripts/sync-upstream.sh`.
+
 ### weekly-scan
 
 **Trigger:** User says "weekly scan" or "run weekly review".
