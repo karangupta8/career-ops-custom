@@ -1,0 +1,3 @@
+[submodule "custom-integrations/vendor/reactive-resume"]
+	path = custom-integrations/vendor/reactive-resume
+	url = https://github.com/karangupta8/reactive-resume-fork.git

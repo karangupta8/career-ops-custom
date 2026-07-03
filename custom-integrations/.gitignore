@@ -1,0 +1,9 @@
+# Generated resume artifacts (canonical JSON, exported PDFs) — code + config only.
+output/*
+!output/.gitkeep
+
+# Reactive Resume build/runtime outputs if it is ever run in-tree.
+vendor/reactive-resume/node_modules/
+vendor/reactive-resume/dist/
+vendor/reactive-resume/.next/
+vendor/**/*.log

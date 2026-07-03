@@ -1,0 +1,132 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CanonicalResume",
+  "description": "Platform-owned resume contract. Aligned to the JSON Resume standard (https://jsonresume.org/schema) so Reactive Resume can import it natively. career-ops PRODUCES this shape; Reactive Resume CONSUMES it. Every future tool negotiates through this file — no tool reads another tool's internals.",
+  "type": "object",
+  "required": ["basics"],
+  "additionalProperties": true,
+  "properties": {
+    "basics": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "name": { "type": "string" },
+        "label": { "type": "string", "description": "Professional headline / target role framing." },
+        "image": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "url": { "type": "string", "description": "Portfolio / personal website." },
+        "summary": { "type": "string" },
+        "location": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "address": { "type": "string" },
+            "postalCode": { "type": "string" },
+            "city": { "type": "string" },
+            "countryCode": { "type": "string" },
+            "region": { "type": "string" }
+          }
+        },
+        "profiles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "network": { "type": "string" },
+              "username": { "type": "string" },
+              "url": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "work": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "name": { "type": "string", "description": "Employer / company." },
+          "position": { "type": "string" },
+          "url": { "type": "string" },
+          "startDate": { "type": "string" },
+          "endDate": { "type": "string" },
+          "location": { "type": "string" },
+          "summary": { "type": "string" },
+          "highlights": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "education": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "institution": { "type": "string" },
+          "area": { "type": "string" },
+          "studyType": { "type": "string" },
+          "startDate": { "type": "string" },
+          "endDate": { "type": "string" },
+          "score": { "type": "string" },
+          "summary": { "type": "string" }
+        }
+      }
+    },
+    "skills": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "name": { "type": "string" },
+          "level": { "type": "string" },
+          "keywords": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "projects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "highlights": { "type": "array", "items": { "type": "string" } },
+          "keywords": { "type": "array", "items": { "type": "string" } },
+          "startDate": { "type": "string" },
+          "endDate": { "type": "string" },
+          "url": { "type": "string" }
+        }
+      }
+    },
+    "certificates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "name": { "type": "string" },
+          "date": { "type": "string" },
+          "issuer": { "type": "string" },
+          "url": { "type": "string" }
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "description": "Platform metadata (non-JSON-Resume). Records provenance and JD tailoring so downstream tools and the user can trace how a resume was produced.",
+      "additionalProperties": true,
+      "properties": {
+        "canonical": { "type": "string", "description": "Format tag, e.g. 'jsonresume@1.0.0'." },
+        "tailoredForJob": { "type": "string", "description": "JD title / company / URL this resume was tailored for; empty for the base CV." },
+        "generatedBy": { "type": "string" },
+        "generatedAt": { "type": "string", "description": "ISO 8601 timestamp." },
+        "source": { "type": "string", "description": "Source file the resume was built from, e.g. 'cv.md'." }
+      }
+    }
+  }
+}
